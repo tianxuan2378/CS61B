@@ -94,6 +94,7 @@ public class Model extends Observable {
         setChanged();
     }
 
+
     /** Tilt the board toward SIDE. Return true iff this changes the board.
      *
      * 1. If two Tile objects are adjacent in the direction of motion and have
@@ -106,6 +107,7 @@ public class Model extends Observable {
      *    value, then the leading two tiles in the direction of motion merge,
      *    and the trailing tile does not.
      * */
+
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
@@ -113,12 +115,56 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+        for(int c = 0; c < board.size(); c++) {
+            for(int r = board.size() - 1; r > 0; r--){
+                if(moveonnull(c, r))
+                    changed = true;
+                if(moveonmerge(c, r))
+                    changed = true;
+                }
+            }
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
+    }
+
+    public Boolean moveonnull(int c, int r) {
+        Boolean moved = false;
+        if(board.tile(c, r) == null){
+           for(int i = r - 1; i >= 0; i--){
+               if(board.tile(c, i) != null){
+                   board.move(c, r, board.tile(c, i));
+                   moved = true;
+                   break;
+               }
+           }
+       }
+        return moved;
+    }
+
+    public Boolean moveonmerge(int c, int r) {
+        Boolean merged = false;
+        if(board.tile(c, r) != null) {
+            for(int i = r-1; i >= 0; i--){   // (c,r)位置之后不会再回到，所以应该向下检索，如果有相同的立即合并
+                if(board.tile(c, i) != null){
+                    if (board.tile(c, r).value() == board.tile(c, i).value()) {
+                        board.move(c, r, board.tile(c, i));
+                        score += board.tile(c, r).value();
+                        merged = true;
+                        break;
+                    }
+                    else
+                        merged = false;      //遇到不同的数阻隔，则不能发生融合，直接break；防止出现2 4 2 合并成 4 4的情况
+                        break;
+                }
+            }
+        }
+        return merged;
     }
 
     /** Checks if the game is over and sets the gameOver variable
@@ -133,11 +179,24 @@ public class Model extends Observable {
         return maxTileExists(b) || !atLeastOneMoveExists(b);
     }
 
+    public static boolean checkiftileisEmpty(Board b, int col, int row){
+        if(b.tile(col, row) == null)
+            return true;
+        return false;
+    }
     /** Returns true if at least one space on the Board is empty.
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        for(int r = 0; r < b.size(); r++)
+        {
+            for(int c = 0; c < b.size(); c++)
+            {
+                if(checkiftileisEmpty(b,c, r))
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -148,8 +207,52 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        for(int r = 0; r < b.size(); r++)
+        {
+            for(int c = 0; c < b.size(); c++)
+            {
+                if(checkiftileisEmpty(b, c, r))
+                    continue;
+                else if(b.tile(c, r).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
+
+    // check if there are same neighbors
+    public static Boolean checksameneighbors(Board b, int col, int row){
+        int thisvalue = b.tile(col, row).value();
+        int colneighbor = b.tile(col + 1, row).value();
+        int rowneighbor = b.tile(col, row + 1).value();
+        if(thisvalue == rowneighbor || thisvalue == colneighbor)
+            return true;
+        return false;
+    }
+
+    //从上往下数第一行
+    public static Boolean checkthefirstrow(Board b){
+        for(int i = 0; i < b.size() - 1; i++)
+        {
+            int thisvalue = b.tile(b.size()-1, i).value();
+            int nextvalue = b.tile(b.size()-1, i + 1).value();
+            if(thisvalue == nextvalue)
+                return true;
+        }
+        return false;
+    }
+    public static Boolean checkthefirstcol(Board b){
+        for(int j = 0; j < b.size() - 1; j++)
+        {
+            int thisvalue = b.tile(j, b.size()-1).value();
+            int nextvalue = b.tile(j + 1, b.size()-1).value();
+            if(thisvalue == nextvalue)
+                return true;
+        }
+        return false;
+    }
+
 
     /**
      * Returns true if there are any valid moves on the board.
@@ -159,6 +262,16 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (Model.emptySpaceExists(b) || checkthefirstrow(b) || checkthefirstcol(b))
+            return true;
+        for(int r = 0; r < b.size() - 1; r++)    // 数字下标是从左下角开始的
+        {
+            for(int c = 0; c < b.size() - 1; c++)
+            {
+                if(checksameneighbors(b, c, r))
+                    return true;
+            }
+        }
         return false;
     }
 

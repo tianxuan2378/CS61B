@@ -107,4 +107,27 @@ public class TestUpOnly extends TestUtils {
         checkChanged(Side.NORTH, true, changed);
         checkModel(after, 4, 0, prevBoard, Side.NORTH);
     }
+
+    @Test
+    /** Move tiles up (no merging). */
+    public void testUpmore() {
+        int[][] before = new int[][] {
+                {2, 0, 4, 0},
+                {4, 0, 0, 2},
+                {2, 0, 0, 0},
+                {0, 0, 0, 0},
+        };
+        int[][] after = new int[][] {
+                {2, 0, 4, 2},
+                {4, 0, 0, 0},
+                {2, 0, 0, 0},
+                {0, 0, 0, 0},
+        };
+
+        model = new Model(before, 0, 0, false);
+        String prevBoard = model.toString();
+        boolean changed = model.tilt(Side.NORTH);
+        checkChanged(Side.NORTH, true, changed);
+        checkModel(after, 0, 0, prevBoard, Side.NORTH);
+    }
 }
