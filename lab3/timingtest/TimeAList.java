@@ -25,7 +25,8 @@ public class TimeAList {
         // TODO: YOUR CODE HERE
         AList<Integer> Ns = new AList();
         AList<Double> times = new AList();
-        for (int i = 1000; i <= 10000000; i *= 2) {
+        AList<Integer> opCounts = new AList();
+        for (int i = 1000; i <= 128000; i *= 2) {
             AList<Integer> L = new AList();
             Stopwatch sw = new Stopwatch();
             for (int j = 0; j < i; j++) {
@@ -34,7 +35,8 @@ public class TimeAList {
             double timeInSeconds = sw.elapsedTime();
             Ns.addLast(i);
             times.addLast(timeInSeconds);
+            opCounts.addLast(i);
         }
-        printTimingTable(Ns, times, Ns);
+        printTimingTable(Ns, times, opCounts);
     }
 }
