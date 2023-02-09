@@ -1,4 +1,4 @@
-package deque;
+package student;
 
 import java.util.Iterator;
 
@@ -44,6 +44,14 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
         Node temp = new Node(sentinel.prev, item, sentinel);
         sentinel.prev.next = temp;
         sentinel.prev = temp;
+    }
+
+    @Override
+    public boolean isEmpty(){
+        if(size == 0){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -145,6 +153,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
     //Returns whether or not the parameter o is equal to the Deque.
     // o is considered equal if it is a Deque and
     // if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
+    @Override
     public boolean equals(Object o){
         if(o == this){
             return true;

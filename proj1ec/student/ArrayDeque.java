@@ -1,10 +1,10 @@
-package deque;
+package student;
 
 import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
-    public int size;
+    private int size;
     public int startsize = 8;  //The starting size of the array should be 8.
     public T[] items;
     public int nextfirst;   // This array is a circled array
@@ -18,12 +18,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     // For the movement of nextfirst
-    public int addone(int x){
+    private int addone(int x){
         return (x + 1) % items.length;
     }
 
     // For the movement of nextfirst
-    public int minusone(int x){
+    private int minusone(int x){
         return (x - 1 + items.length) % items.length;
     }
 
@@ -76,6 +76,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         items[nextlast] = item;
         nextlast = addone(nextlast);
         size++;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override
@@ -168,6 +173,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     //Returns whether or not the parameter o is equal to the Deque.
     // o is considered equal if it is a Deque and
     // if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
+    @Override
     public boolean equals(Object o){
         if(o == this){
             return true;

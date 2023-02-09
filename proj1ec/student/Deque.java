@@ -1,20 +1,16 @@
 package student;
 
-/**
- * Created by hug on 2/4/2017.
- * Added isEmpty() default implementation on 2/3/2019.
- */
-public interface Deque<Item> {
-    void addFirst(Item x);
-    void addLast(Item x);
+import java.util.Iterator;
 
-    default boolean isEmpty() {
-        return size() == 0;
-    }
-
+public interface Deque<T> {
+    void addFirst(T item);
+    void addLast(T item);
+    boolean isEmpty();
     int size();
     void printDeque();
-    Item removeFirst();
-    Item removeLast();
-    Item get(int index);
+    T removeFirst();
+    T removeLast();
+    T get(int index);
+    boolean equals(Object o);
+    Iterator<T> iterator();
 }
