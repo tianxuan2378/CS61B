@@ -5,7 +5,7 @@ import java.util.Iterator;
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private int size;
-    int startsize = 8;  //The starting size of the array should be 8.
+    private int startsize = 8;  //The starting size of the array should be 8.
     private T[] items;
     private int nextfirst;   // This array is a circled array
     private int nextlast;
@@ -30,7 +30,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         int index = addone(nextfirst);
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             temp[i] = items[index];
             index = addone(index);
         }
@@ -85,9 +85,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void printDeque() {
-        if(!this.isEmpty()) {
+        if (!this.isEmpty()) {
             int temp = size;
-            while(temp > 0) {
+            while (temp > 0) {
                 nextfirst = addone(nextfirst);
                 System.out.println(items[nextfirst] + " ");
                 temp -= 1;
@@ -100,14 +100,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     // If no such item exists, returns null.
     @Override
     public T removeFirst() {
-        if(size == 0) {
+        if (size == 0) {
             return null;
         }
         checkWasted();
         nextfirst = addone(nextfirst);
         T returnitem = items[nextfirst];
         items[nextfirst] = null;
-        size--;
+        size --;
         return returnitem;
     }
 
@@ -115,14 +115,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     // If no such item exists, returns null.
     @Override
     public T removeLast() {
-        if(size == 0) {
+        if (size == 0) {
             return null;
         }
         checkWasted();
         nextlast = minusone(nextlast);
         T returnitem = items[nextlast];
         items[nextlast] = null;
-        size--;
+        size --;
         return returnitem;
     }
 
@@ -130,7 +130,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     // If no such item exists, returns null. Must not alter the deque!
     @Override
     public T get(int index) {
-        if(index < 0) {
+        if (index < 0) {
             return null;
         }
         int gap = addone(nextfirst);
@@ -167,23 +167,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     //Returns whether or not the parameter o is equal to the Deque.
     // o is considered equal if it is a Deque and
-    // if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
-    public boolean equals(Object o) {
-        if(o == this) {
+    // if it contains the same contents (as goverened by the generic T’s equals method)
+    // in the same order.
+    public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
-        if(o == null) {
+        if (obj == null) {
             return false;
         }
-        if(o.getClass() != this.getClass()) {
+        if (!(obj instanceof Deque)) {
             return false;
         }
-        ArrayDeque<T> p = (ArrayDeque<T>) o;
-        if(p.size != this.size) {
+        Deque<T> o = (Deque<T>) obj;
+        if (size != o.size()) {
             return false;
         }
         for (int i = 0; i < size; i++) {
-            if (!this.get(i).equals(p.get(i))) {
+            if (!this.get(i).equals(o.get(i))) {
                 return false;
             }
         }

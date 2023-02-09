@@ -11,7 +11,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             item = null;
             prev = next = null;
         }
-        public Node(Node p, T i, Node n) {
+        Node(Node p, T i, Node n) {
             prev = p;
             item = i;
             next = n;
@@ -57,7 +57,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public void printDeque() {
         Node p = sentinel;
         int i = size;
-        while(i > 0) {
+        while (i > 0) {
             p = p.next;
             System.out.println(p.item + " ");
             i --;
@@ -69,7 +69,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     // If no such item exists, returns null.
     @Override
     public T removeFirst() {
-        if(size == 0) {
+        if (size == 0) {
             return null;
         }
         else {
@@ -86,7 +86,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     // If no such item exists, returns null.
     @Override
     public T removeLast() {
-        if(size == 0) {
+        if (size == 0) {
             return null;
         }
         else {
@@ -103,12 +103,12 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     // If no such item exists, returns null. Must not alter the deque!
     @Override
     public T get(int index) {
-        if(index < 0 || index > size) {
+        if (index < 0 || index > size) {
             return null;
         }
         Node p = sentinel;
         int i = index;
-        while(i >= 0) {
+        while (i >= 0) {
             p = p.next;
             i--;
         }
@@ -123,9 +123,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     private class DequeIterator implements Iterator<T> {
         private int pos;
-        Node temp;
+        private Node temp;
 
-        public DequeIterator() {
+        DequeIterator() {
             pos = 0;
             temp = sentinel.next;
         }
@@ -145,35 +145,33 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     //Returns whether or not the parameter o is equal to the Deque.
     // o is considered equal if it is a Deque and
     // if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
-    public boolean equals(Object o) {
-        if(o == this) {
+    public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
-        if(o == null) {
+        if (obj == null) {
             return false;
         }
-        if(o.getClass() != this.getClass()) {
+        if (!(obj instanceof  Deque)) {
             return false;
         }
-        LinkedListDeque<T> p = (LinkedListDeque<T>) o;
-        if(p.size != this.size) {
+        Deque<T> o = (Deque<T>) obj;
+        if (size != o.size()) {
             return false;
         }
-        int a = 0;
-        for(T item : this) {
-            if(item != p.get(a)) {
+        for (int i = 0; i < size; i++) {
+            if (!this.get(i).equals(o.get(i))) {
                 return false;
             }
-            a++;
         }
         return true;
     }
 
-    public T getRecursiveHelper(int index, Node p) {
-        if(p == sentinel) {
+    private T getRecursiveHelper(int index, Node p) {
+        if (p == sentinel) {
             return null;
         }
-        if(index == 0) {
+        if (index == 0) {
             return p.item;
         }
         return getRecursiveHelper(index - 1, p.next);
