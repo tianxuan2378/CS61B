@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
     private class Node{
-        public T item;
-        public Node prev;
-        public Node next;
+        private T item;
+        private Node prev;
+        private Node next;
         Node() {
             item = null;
             prev = next = null;
@@ -170,13 +170,13 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     //Same as get, but uses recursion.
-    public T getRecursive(int index){
-        if(index < 0 || index > size) {
+    public T getRecursive(int index, Node p){
+        if(p == sentinel) {
             return null;
         }
-        Node p = sentinel;
-        if(index == 0)
-            return p.next.item;
-        return getRecursive(index - 1);
+        if(index == 0) {
+            return p.item;
+        }
+        return getRecursive(index - 1, p.next);
     }
 }

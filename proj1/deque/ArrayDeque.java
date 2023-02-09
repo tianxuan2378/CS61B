@@ -4,11 +4,11 @@ import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
-    public int size;
-    public int startsize = 8;  //The starting size of the array should be 8.
-    public T[] items;
-    public int nextfirst;   // This array is a circled array
-    public int nextlast;
+    protected int size;
+    protected int startsize = 8;  //The starting size of the array should be 8.
+    protected T[] items;
+    protected int nextfirst;   // This array is a circled array
+    protected int nextlast;
 
     public ArrayDeque(){
         items = (T[]) new Object[startsize];
@@ -18,12 +18,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     // For the movement of nextfirst
-    public int addone(int x){
+    protected int addone(int x){
         return (x + 1) % items.length;
     }
 
     // For the movement of nextfirst
-    public int minusone(int x){
+    protected int minusone(int x){
         return (x - 1 + items.length) % items.length;
     }
 
