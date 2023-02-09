@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.Comparator;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class MaxArrayDequeTest {
     private static class IntComparator implements Comparator<Integer>{
@@ -32,23 +32,23 @@ public class MaxArrayDequeTest {
     @Test
     public void largerIntTest() {
         Comparator<Integer> cmp = getIntComparator();
-        MaxArrayDeque<Integer> m = new MaxArrayDeque<>(cmp);
-        m.addFirst(1);
-        m.addFirst(2);
-        m.addFirst(7);
-        m.addFirst(4);
-        int maxInt = m.max();
+        MaxArrayDeque<Integer> mad = new MaxArrayDeque<>(cmp);
+        mad.addFirst(1);
+        mad.addFirst(2);
+        mad.addFirst(7);
+        mad.addFirst(4);
+        int maxInt = mad.max();
         assertEquals(7, maxInt);
     }
 
     @Test
     public void largerStringTest() {
         Comparator<String> cmp1 = getStringComparator();
-        MaxArrayDeque<String> m = new MaxArrayDeque<>(cmp1);
-        m.addLast("anna");
-        m.addFirst("elsa");
-        m.addLast("bob");
-        String lastAppear = m.max();
+        MaxArrayDeque<String> mad = new MaxArrayDeque<>(cmp1);
+        mad.addLast("anna");
+        mad.addFirst("elsa");
+        mad.addLast("bob");
+        String lastAppear = mad.max();
         assertEquals("elsa", lastAppear);
     }
 }

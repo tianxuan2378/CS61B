@@ -4,11 +4,11 @@ import java.util.Iterator;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
-    private int size;
-    private int startsize = 8;  //The starting size of the array should be 8.
-    private T[] items;
-    private int nextfirst;   // This array is a circled array
-    private int nextlast;
+    protected int size;
+    protected int startsize = 8;  //The starting size of the array should be 8.
+    protected T[] items;
+    protected int nextfirst;   // This array is a circled array
+    protected int nextlast;
 
     public ArrayDeque() {
         items = (T[]) new Object[startsize];
@@ -18,12 +18,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     // For the movement of nextfirst
-    int addone(int x) {
+    protected int addone(int x) {
         return (x + 1) % items.length;
     }
 
     // For the movement of nextfirst
-    private int minusone(int x){
+    private int minusone(int x) {
         return (x - 1 + items.length) % items.length;
     }
 
@@ -107,7 +107,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         nextfirst = addone(nextfirst);
         T returnitem = items[nextfirst];
         items[nextfirst] = null;
-        size --;
+        size--;
         return returnitem;
     }
 
@@ -122,7 +122,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         nextlast = minusone(nextlast);
         T returnitem = items[nextlast];
         items[nextlast] = null;
-        size --;
+        size--;
         return returnitem;
     }
 
@@ -148,7 +148,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private class ArrayNewIterator implements Iterator<T> {
         private int pos;
-        ArrayNewIterator(){
+        ArrayNewIterator() {
             pos = addone(nextfirst);
         }
 

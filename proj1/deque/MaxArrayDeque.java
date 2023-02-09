@@ -4,17 +4,9 @@ import java.util.Comparator;
 
 public class MaxArrayDeque<T> extends ArrayDeque<T> {
     private Comparator<T> cmp;
-    private int size;
-    private int startsize = 8;  //The starting size of the array should be 8.
-    private T[] items;
-    private int nextfirst;   // This array is a circled array
-    private int nextlast;
+
     //*  creates a MaxArrayDeque with the given Comparator. */
     public MaxArrayDeque(Comparator<T> c) {
-        items = (T[]) new Object[startsize];
-        size = 0;
-        nextfirst = 2;
-        nextlast = 3;
         cmp = c;
     }
 

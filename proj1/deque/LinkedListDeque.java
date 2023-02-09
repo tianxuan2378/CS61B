@@ -71,8 +71,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public T removeFirst() {
         if (size == 0) {
             return null;
-        }
-        else {
+        }else {
             size -= 1;
             Node temp = sentinel.next;
             T x = temp.item;
@@ -88,8 +87,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public T removeLast() {
         if (size == 0) {
             return null;
-        }
-        else {
+        }else {
             size -= 1;
             Node temp = sentinel.prev;
             T x = temp.item;
@@ -144,7 +142,8 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     //Returns whether or not the parameter o is equal to the Deque.
     // o is considered equal if it is a Deque and
-    // if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
+    // if it contains the same contents (as goverened by the generic T’s equals method)
+    // in the same order.
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
