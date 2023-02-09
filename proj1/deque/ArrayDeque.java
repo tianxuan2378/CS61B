@@ -2,15 +2,15 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
-    protected int size;
-    protected int startsize = 8;  //The starting size of the array should be 8.
-    protected T[] items;
-    protected int nextfirst;   // This array is a circled array
-    protected int nextlast;
+    private int size;
+    int startsize = 8;  //The starting size of the array should be 8.
+    private T[] items;
+    private int nextfirst;   // This array is a circled array
+    private int nextlast;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         items = (T[]) new Object[startsize];
         size = 0;
         nextfirst = 2;
@@ -18,19 +18,19 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     }
 
     // For the movement of nextfirst
-    protected int addone(int x){
+    int addone(int x) {
         return (x + 1) % items.length;
     }
 
     // For the movement of nextfirst
-    protected int minusone(int x){
+    private int minusone(int x){
         return (x - 1 + items.length) % items.length;
     }
 
-    private void resize(int capacity){
+    private void resize(int capacity) {
         T[] temp = (T[]) new Object[capacity];
         int index = addone(nextfirst);
-        for(int i = 0; i < size; i++){
+        for(int i = 0; i < size; i++) {
             temp[i] = items[index];
             index = addone(index);
         }
@@ -85,9 +85,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
 
     @Override
     public void printDeque() {
-        if(!this.isEmpty()){
+        if(!this.isEmpty()) {
             int temp = size;
-            while(temp > 0){
+            while(temp > 0) {
                 nextfirst = addone(nextfirst);
                 System.out.println(items[nextfirst] + " ");
                 temp -= 1;
@@ -146,7 +146,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
         return new ArrayNewIterator();
     }
 
-    private class ArrayNewIterator implements Iterator<T>{
+    private class ArrayNewIterator implements Iterator<T> {
         private int pos;
         ArrayNewIterator(){
             pos = addone(nextfirst);
@@ -168,18 +168,18 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T>{
     //Returns whether or not the parameter o is equal to the Deque.
     // o is considered equal if it is a Deque and
     // if it contains the same contents (as goverened by the generic T’s equals method) in the same order.
-    public boolean equals(Object o){
-        if(o == this){
+    public boolean equals(Object o) {
+        if(o == this) {
             return true;
         }
-        if(o == null){
+        if(o == null) {
             return false;
         }
-        if(o.getClass() != this.getClass()){
+        if(o.getClass() != this.getClass()) {
             return false;
         }
         ArrayDeque<T> p = (ArrayDeque<T>) o;
-        if(p.size != this.size){
+        if(p.size != this.size) {
             return false;
         }
         for (int i = 0; i < size; i++) {
