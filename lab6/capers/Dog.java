@@ -6,11 +6,12 @@ import static capers.Utils.*;
 
 /** Represents a dog that can be serialized.
  * @author
-*/
-public class Dog implements Serializable{
+ */
+public class Dog implements Serializable {
 
     /** Folder that dogs live in. */
-    static final File DOG_FOLDER = join(new File(System.getProperty("user.dir")),
+    static final File DOG_FOLDER = Utils.join(
+            new File(System.getProperty("user.dir")),
             ".capers", "dogs");
 
     /** Age of dog. */
@@ -39,9 +40,18 @@ public class Dog implements Serializable{
      * @return Dog read from file
      */
     public static Dog fromFile(String name) {
-        File dogFile = new File(DOG_FOLDER, "NAME");
-        Dog d = readObject(dogFile, Dog.class);
-        return d;
+//        File dogFile = new File(DOG_FOLDER, name);
+//        Dog d = readObject(dogFile, Dog.class);
+//        return d;
+        Dog dog;
+        File inFile = Utils.join(DOG_FOLDER.toString(), name);
+        if (inFile.exists()) {
+            dog = readObject(inFile, Dog.class);
+            return dog;
+        } else {
+            System.out.println(String.format("Dog %s doesn't exist!", name));
+            return null;
+        }
     }
 
     /**
@@ -57,18 +67,19 @@ public class Dog implements Serializable{
      * Saves a dog to a file for future use.
      */
     public void saveDog() {
-        if (fromFile(name) != null) { //dog with this name has already existed
+        if(fromFile(name) != null){ // dog with this name has alreay exists
             return;
         }
-        File dogFile = new File(DOG_FOLDER, name);
+//        File dogFile = new File(DOG_FOLDER, name);
+        File dogFile = join(DOG_FOLDER.toString(), this.name);
         writeObject(dogFile, this);
     }
 
     @Override
     public String toString() {
         return String.format(
-            "Woof! My name is %s and I am a %s! I am %d years old! Woof!",
-            name, breed, age);
+                "Woof! My name is %s and I am a %s! I am %d years old! Woof!",
+                name, breed, age);
     }
 
 }
