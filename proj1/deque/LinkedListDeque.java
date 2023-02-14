@@ -60,7 +60,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         while (i > 0) {
             p = p.next;
             System.out.println(p.item + " ");
-            i --;
+            i--;
         }
         System.out.println();
     }
@@ -71,7 +71,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public T removeFirst() {
         if (size == 0) {
             return null;
-        }else {
+        } else {
             size -= 1;
             Node temp = sentinel.next;
             T x = temp.item;
@@ -87,7 +87,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public T removeLast() {
         if (size == 0) {
             return null;
-        }else {
+        } else {
             size -= 1;
             Node temp = sentinel.prev;
             T x = temp.item;

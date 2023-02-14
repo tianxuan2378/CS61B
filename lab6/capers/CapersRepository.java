@@ -1,6 +1,9 @@
 package capers;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+
 import static capers.Utils.*;
 
 /** A repository for Capers 
@@ -13,13 +16,13 @@ import static capers.Utils.*;
  *
  * TODO: change the above structure if you do something different.
  */
-public class CapersRepository {
+public class CapersRepository implements Serializable{
     /** Current Working Directory. */
     static final File CWD = new File(System.getProperty("user.dir"));
 
     /** Main metadata folder. */
-    static final File CAPERS_FOLDER = null; // TODO Hint: look at the `join`
-                                            //      function in Utils
+    static final File CAPERS_FOLDER = join(CWD, ".capers"); // TODO Hint: look at the `join`
+                                                                    // function in Utils
 
     /**
      * Does required filesystem operations to allow for persistence.
@@ -31,7 +34,18 @@ public class CapersRepository {
      *    - story -- file containing the current story
      */
     public static void setupPersistence() {
-        // TODO
+        CAPERS_FOLDER.mkdir();
+        File storyFolder = new File(CAPERS_FOLDER, "story");
+        File dogsFolder = new File(CAPERS_FOLDER, "dogs");
+        storyFolder.mkdir();
+        dogsFolder.mkdir();
+        File storyFile = new File(storyFolder, "story.txt");
+        try {
+            storyFile.createNewFile();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -40,7 +54,14 @@ public class CapersRepository {
      * @param text String of the text to be appended to the story
      */
     public static void writeStory(String text) {
-        // TODO
+        File storyFolder = new File(CAPERS_FOLDER, "story");
+        File storyFile = new File(storyFolder, "story.txt");
+        // read existing story
+        String story = readContentsAsString(storyFile);
+        //concatenate the story
+        String newStory = story.concat(text).concat("\n");
+        writeContents(storyFile, newStory);
+        System.out.println(newStory);
     }
 
     /**
@@ -49,7 +70,11 @@ public class CapersRepository {
      * Also prints out the dog's information using toString().
      */
     public static void makeDog(String name, String breed, int age) {
-        // TODO
+        Dog d = new Dog(name, breed, age);
+        File dogFolder = new File(CAPERS_FOLDER, "dogs");
+        File dogFile = new File(dogFolder, name);
+        writeObject(dogFile, d);
+        System.out.println(d);
     }
 
     /**
@@ -59,6 +84,12 @@ public class CapersRepository {
      * @param name String name of the Dog whose birthday we're celebrating.
      */
     public static void celebrateBirthday(String name) {
-        // TODO
+        File dogFolder = new File(CAPERS_FOLDER, "dogs");
+        Dog d = Dog.fromFile(name);
+        if (d == null)
+            return;
+        d.haveBirthday();
+        File dogFile = new File(dogFolder, name);
+        writeObject(dogFile, d);
     }
 }
