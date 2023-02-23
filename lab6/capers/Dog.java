@@ -44,7 +44,7 @@ public class Dog implements Serializable {
 //        Dog d = readObject(dogFile, Dog.class);
 //        return d;
         Dog dog;
-        File inFile = Utils.join(DOG_FOLDER.toString(), name);
+        File inFile = join(DOG_FOLDER.toString(), name);
         if (inFile.exists()) {
             dog = readObject(inFile, Dog.class);
             return dog;
