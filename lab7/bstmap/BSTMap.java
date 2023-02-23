@@ -3,7 +3,7 @@ package bstmap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class BSTMap<K extends Comparable, V> implements Map61B<K, V>{
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
     private BSTNode root;  // 根节点
     private class BSTNode{
         public BSTNode left;
@@ -41,7 +41,7 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V>{
         return get(root, key);
     }
 
-    public V get(BSTNode x, K key) {
+    private V get(BSTNode x, K key) {
         if (key == null)
             throw new IllegalArgumentException("calls get() with a null key");
         if (x == null)
@@ -58,6 +58,8 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V>{
 
     @Override
     public int size() {
+        if(root == null)
+            return 0;
         return root.size;
     }
 
@@ -67,7 +69,7 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V>{
         root = put(root, key, value);
     }
 
-    public BSTNode put(BSTNode x, K key, V value) {
+    private BSTNode put(BSTNode x, K key, V value) {
         if(x == null)
             return new BSTNode(key, value, 1);
         int cmp = x.key.compareTo(key);
@@ -81,10 +83,6 @@ public class BSTMap<K extends Comparable, V> implements Map61B<K, V>{
         return x;
     }
 
-    //prints out the BSTMap in order of increasing Key.
-    public void printInOrder(){
-
-    }
     @Override
     public Set<K> keySet() {
         throw new UnsupportedOperationException();
