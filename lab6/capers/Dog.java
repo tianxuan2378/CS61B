@@ -5,14 +5,13 @@ import java.io.Serializable;
 import static capers.Utils.*;
 
 /** Represents a dog that can be serialized.
- * @author
+ * @author Carl Guo
  */
-public class Dog implements Serializable {
+public class Dog implements Serializable{ // TODO
 
     /** Folder that dogs live in. */
-    static final File DOG_FOLDER = Utils.join(
-            new File(System.getProperty("user.dir")),
-            ".capers", "dogs");
+    static final File DOG_FOLDER = join(".capers", "dogs"); // Done TODO (hint: look at the `join`
+    //      function in Utils)
 
     /** Age of dog. */
     private int age;
@@ -40,18 +39,10 @@ public class Dog implements Serializable {
      * @return Dog read from file
      */
     public static Dog fromFile(String name) {
-//        File dogFile = new File(DOG_FOLDER, name);
-//        Dog d = readObject(dogFile, Dog.class);
-//        return d;
-        Dog dog;
-        File inFile = Utils.join(DOG_FOLDER.toString(), name);
-        if (inFile.exists()) {
-            dog = readObject(inFile, Dog.class);
-            return dog;
-        } else {
-            System.out.println(String.format("Dog %s doesn't exist!", name));
-            return null;
-        }
+        // Done TODO (hint: look at the Utils file)
+        File dogsFile = join(DOG_FOLDER, name + ".txt");
+        Dog d = readObject(dogsFile, Dog.class);
+        return d;
     }
 
     /**
@@ -67,12 +58,16 @@ public class Dog implements Serializable {
      * Saves a dog to a file for future use.
      */
     public void saveDog() {
-        if(fromFile(name) != null){ // dog with this name has alreay exists
-            return;
+        // Done TODO (hint: don't forget dog names are unique)
+        File dog = join(DOG_FOLDER, this.name + ".txt");
+        if (!dog.exists()) {
+            try {
+                dog.createNewFile();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         }
-//        File dogFile = new File(DOG_FOLDER, name);
-        File dogFile = join(DOG_FOLDER.toString(), this.name);
-        writeObject(dogFile, this);
+        writeObject(dog, this);
     }
 
     @Override
