@@ -64,7 +64,7 @@ public class Main {
                 break;
             case "birthday":
                 validateNumArgs("birthday", args, 2);
-                // TODO: celebrate this dog's birthday
+                // Done TODO: celebrate this dog's birthday
                 celebrateBirthday(args[1]);
                 break;
             default:
