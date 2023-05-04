@@ -22,7 +22,11 @@ public class CapersRepository {
     static final File CWD = new File(System.getProperty("user.dir"));
 
     /** Main metadata folder. */
+<<<<<<< HEAD
     static final File CAPERS_FOLDER = join(CWD, ".capers"); // DONE TODO Hint: look at the `join`
+=======
+    static final File CAPERS_FOLDER = Utils.join(CWD, ".capers");
+>>>>>>> 12131de97cc982d3424333723c107058c3262192
     //      function in Utils
     static final File story = join(CAPERS_FOLDER, "story.txt");
 
@@ -56,11 +60,22 @@ public class CapersRepository {
      * @param text String of the text to be appended to the story
      */
     public static void writeStory(String text) {
+<<<<<<< HEAD
         // Done TODO
         String existedContent = readContentsAsString(story);
         writeContents(story, existedContent + "\n" + text);
         String Content = readContentsAsString(story);
         System.out.println(Content);
+=======
+        File storyFolder = new File(CAPERS_FOLDER, "story");
+        File storyFile = new File(storyFolder, "story.txt");
+        // read existing story
+        String story = readContentsAsString(storyFile);
+        // concatenate the story
+        String newStory = story.concat(text).concat("\n");
+        writeContents(storyFile, newStory);
+        System.out.println(newStory);
+>>>>>>> 12131de97cc982d3424333723c107058c3262192
     }
 
     /**
